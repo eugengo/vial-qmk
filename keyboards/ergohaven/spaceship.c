@@ -201,6 +201,11 @@ static const char PROGMEM mask_row_4[] = {
 };
 
 static void render_spaceship(void) {
+    if (is_keyboard_right()) {
+        oled_set_rotation(OLED_ROTATION_180);
+    } else {
+        oled_set_rotation(OLED_ROTATION_0);
+    }
     char wpm = get_current_wpm();
     char render_row[128];
     int i;
