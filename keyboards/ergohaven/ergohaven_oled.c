@@ -6,7 +6,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "bongocat.c"
+//#include "bongocat.c"
 #include "spaceship.c"
 
 typedef union {
@@ -29,7 +29,7 @@ typedef enum {
     OLED_SPLASH,
     OLED_STATUS_MODERN,
     OLED_STATUS_MINIMALISTIC,
-    OLED_BONGOCAT,
+    //OLED_BONGOCAT,
     OLED_SPACESHIP,
     OLED_MEDIA_VER,
     OLED_MEDIA_HOR,
@@ -65,7 +65,7 @@ bool split_get_caps_word(void) {
 oled_rotation_t get_desired_oled_rotation(void) {
     int mode = get_oled_mode();
     switch (mode) {
-        case OLED_BONGOCAT:
+        //case OLED_BONGOCAT:
         case OLED_SPACESHIP:
         case OLED_MEDIA_HOR:
             return is_keyboard_left() ? OLED_ROTATION_0 : OLED_ROTATION_180;
@@ -449,9 +449,9 @@ bool oled_task_kb(void) {
             ergohaven_dark_draw();
             break;
 
-        case OLED_BONGOCAT:
-            render_bongocat();
-            break;
+        //case OLED_BONGOCAT:
+            //render_bongocat();
+            //break;
 
         case OLED_SPACESHIP:
             render_spaceship();
