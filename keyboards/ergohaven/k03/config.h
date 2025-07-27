@@ -14,7 +14,7 @@
 #define SPLIT_WATCHDOG_ENABLE
 
 #ifdef OLED_ENABLE
-#    define OLED_DISPLAY_128X32
+#define OLED_DISPLAY_128X32
 #define I2C1_SCL_PIN        GP3
 #define I2C1_SDA_PIN        GP2
 #define OLED_BRIGHTNESS 128
