@@ -1,6 +1,4 @@
 #include QMK_KEYBOARD_H
-#include "split_util.h"
-#include "oled_driver.h"
 
 // Spaceship OLED Code Starts Here
 
