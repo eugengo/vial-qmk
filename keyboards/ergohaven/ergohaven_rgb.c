@@ -45,7 +45,7 @@ void layer_state_set_rgb(layer_state_t state) {
             rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
         } else {
             // For any other active layer, set breathing effect
-            rgblight_mode(RGB_MODE_BREATHING);
+            rgblight_mode(RGB_MODE_BREATHE);
         }
         // Enable RGB for all active layers except 0
     for (int layer = 1; layer <= _FIFTEEN; ++layer)
