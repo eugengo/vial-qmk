@@ -63,15 +63,10 @@ bool split_get_caps_word(void) {
 oled_rotation_t get_desired_oled_rotation(void) {
     int mode = get_oled_mode();
     switch (mode) {
-        //case OLED_BONGOCAT:
         case OLED_SPACESHIP:
         case OLED_MEDIA_HOR:
             return is_keyboard_left() ? OLED_ROTATION_0 : OLED_ROTATION_180;
             break;
-#ifdef EH_K02
-        case OLED_SPLASH:
-            return OLED_ROTATION_180;
-#endif
         default:
             return OLED_ROTATION_270;
     }
@@ -322,11 +317,7 @@ bool oled_task_kb(void) {
             ergohaven_dark_draw();
             break;
 
-        //case OLED_BONGOCAT:
-            //render_bongocat();
-            //break;
-
-        case OLED_SPACESHIP:
+       case OLED_SPACESHIP:
             render_spaceship();
             break;
 
