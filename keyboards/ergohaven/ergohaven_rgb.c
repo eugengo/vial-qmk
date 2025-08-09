@@ -42,10 +42,10 @@ void keyboard_post_init_rgb(void) {
 void layer_state_set_rgb(layer_state_t state) {
     // If only layer 0 is active, set static light mode
         if (state & (1 << 0)) {
-            rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+            rgblight_mode(RGB_MODE_STATIC_LIGHT);
         } else {
             // For any other active layer, set breathing effect
-            rgblight_mode(RGBLIGHT_MODE_BREATHING);
+            rgblight_mode(RGB_MODE_BREATHING);
         }
         // Enable RGB for all active layers except 0
     for (int layer = 1; layer <= _FIFTEEN; ++layer)
