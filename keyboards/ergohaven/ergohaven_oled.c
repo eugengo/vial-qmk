@@ -6,7 +6,6 @@
 #include <string.h>
 #include <ctype.h>
 
-//#include "bongocat.c"
 #include "spaceship.c"
 
 typedef union {
@@ -29,7 +28,6 @@ typedef enum {
     OLED_SPLASH,
     OLED_STATUS_MODERN,
     OLED_STATUS_MINIMALISTIC,
-    //OLED_BONGOCAT,
     OLED_SPACESHIP,
     OLED_MEDIA_VER,
     OLED_MEDIA_HOR,
