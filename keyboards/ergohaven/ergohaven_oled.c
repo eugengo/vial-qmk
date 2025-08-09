@@ -5,6 +5,7 @@
 #include "transactions.h"
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 #include "spaceship.c"
 
