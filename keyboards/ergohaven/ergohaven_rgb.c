@@ -40,18 +40,9 @@ void keyboard_post_init_rgb(void) {
 
 // This function sets the RGB effect depending on the active layer
 void layer_state_set_rgb(layer_state_t state) {
-
-
-
-
-        // Any other layer present ⇒ breathing effect
-        rgblight_mode(RGBLIGHT_MODE_BREATHING);
-
-
-    /* Apply per-layer colours */
-    for (int layer = 1; layer <= _FIFTEEN; ++layer) {
+    // Enable RGB for all active layers except 0
+    for (int layer = 1; layer <= _FIFTEEN; ++layer)
         rgblight_set_layer_state(layer, layer_state_cmp(state, layer));
-    }
 }
 
 static bool is_rgb_on = false;
