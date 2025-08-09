@@ -37,10 +37,9 @@
 #define RGBLIGHT_SPLIT
 #define RGBLIGHT_LAYERS
 #define RGBLIGHT_MAX_LAYERS 16
-/* for the black color on layer 0
- * #define RGBLIGHT_LAYERS_RETAIN_VAL
- */
-#define RGBLIGHT_DEFAULT_VAL 70
+//for the black color on layer 0
+//#define RGBLIGHT_LAYERS_RETAIN_VAL
+#define RGBLIGHT_DEFAULT_VAL 10
 #define RGBLIGHT_LIMIT_VAL 250
 #define RGBLIGHT_DEFAULT_SAT 255
 
