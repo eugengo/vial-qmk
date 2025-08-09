@@ -28,7 +28,6 @@ typedef enum {
     OLED_STATUS_CLASSIC = 0,
     OLED_SPLASH,
     OLED_STATUS_MODERN,
-    OLED_STATUS_MINIMALISTIC,
     OLED_SPACESHIP,
     OLED_MEDIA_VER,
     OLED_MEDIA_HOR,
@@ -311,11 +310,7 @@ bool oled_task_kb(void) {
             render_status_modern();
             break;
 
-        case OLED_STATUS_MINIMALISTIC:
-            render_status_minimalistic();
-            break;
-
-        case OLED_MEDIA_HOR:
+       case OLED_MEDIA_HOR:
             render_media_hor();
             break;
 
