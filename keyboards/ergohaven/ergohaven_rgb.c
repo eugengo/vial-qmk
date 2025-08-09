@@ -37,7 +37,9 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 void keyboard_post_init_rgb(void) {
     rgblight_layers = my_rgb_layers;
 }
-
+void keyboard_post_init_user(void) {
+    rgblight_mode(RGBLIGHT_MODE_BREATHING);
+}
 // This function sets the RGB effect depending on the active layer
 void layer_state_set_rgb(layer_state_t state) {
     uint8_t top = get_highest_layer(state);  // какой слой поверх остальных?
