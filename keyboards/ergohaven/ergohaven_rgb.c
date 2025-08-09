@@ -26,6 +26,7 @@ const rgblight_segment_t PROGMEM layer14_rgb[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, 
 const rgblight_segment_t PROGMEM layer15_rgb[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_GOLD});
 
 // Array of all RGB layers; later layers take precedence
+// clang-format off
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
     layer0_rgb, layer1_rgb, layer2_rgb, layer3_rgb, layer4_rgb, layer5_rgb, layer6_rgb, layer7_rgb,
     layer8_rgb, layer9_rgb, layer10_rgb, layer11_rgb, layer12_rgb, layer13_rgb, layer14_rgb, layer15_rgb
