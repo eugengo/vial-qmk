@@ -26,7 +26,6 @@ vial_config_t vial_config;
 
 typedef enum {
     OLED_STATUS_CLASSIC = 0,
-    OLED_SPLASH,
     OLED_STATUS_MODERN,
     OLED_SPACESHIP,
     OLED_MEDIA_VER,
@@ -267,7 +266,6 @@ void render_media_hor(void) {
     }
 }
 
-__attribute__((weak)) void ergohaven_dark_draw(void) {}
 
 static uint32_t last_layout_options_time = 0;
 
@@ -313,11 +311,7 @@ bool oled_task_kb(void) {
             render_media_ver();
             break;
 
-        case OLED_SPLASH:
-            ergohaven_dark_draw();
-            break;
-
-       case OLED_SPACESHIP:
+      case OLED_SPACESHIP:
             render_spaceship();
             break;
 
