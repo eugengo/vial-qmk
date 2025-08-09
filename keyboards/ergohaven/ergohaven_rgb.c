@@ -37,20 +37,16 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 void keyboard_post_init_rgb(void) {
     rgblight_layers = my_rgb_layers;
 }
-void keyboard_post_init_user(void) {
-    rgblight_mode(RGBLIGHT_MODE_BREATHING);
-}
+
 // This function sets the RGB effect depending on the active layer
 void layer_state_set_rgb(layer_state_t state) {
     uint8_t top = get_highest_layer(state);  // какой слой поверх остальных?
 
-    if (top == 0) {
-        // Only base layer visible ⇒ static colour (or anything you prefer)
-        rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-    } else {
+
+
         // Any other layer present ⇒ breathing effect
         rgblight_mode(RGBLIGHT_MODE_BREATHING);
-    }
+
 
     /* Apply per-layer colours */
     for (int layer = 1; layer <= _FIFTEEN; ++layer) {
