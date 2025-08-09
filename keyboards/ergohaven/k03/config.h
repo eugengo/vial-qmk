@@ -36,6 +36,7 @@
 #define RGBLIGHT_SLEEP
 #define RGBLIGHT_SPLIT
 #define RGBLIGHT_LAYERS
+#define RGBLIGHT_EFFECT_BREATHING
 #define RGBLIGHT_MAX_LAYERS 16
 //for the black color on layer 0
 //#define RGBLIGHT_LAYERS_RETAIN_VAL

@@ -40,16 +40,20 @@ void keyboard_post_init_rgb(void) {
 
 // This function sets the RGB effect depending on the active layer
 void layer_state_set_rgb(layer_state_t state) {
-    // If only layer 0 is active, set static light mode
-        if (state & (1 << 0)) {
-            rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-        } else {
-            // For any other active layer, set breathing effect
-            rgblight_mode(RGBLIGHT_MODE_BREATHING 1);
-        }
-        // Enable RGB for all active layers except 0
-    for (int layer = 1; layer <= _FIFTEEN; ++layer)
+    uint8_t top = get_highest_layer(state);  // какой слой поверх остальных?
+
+    if (top == 0) {
+        // Only base layer visible ⇒ static colour (or anything you prefer)
+        rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+    } else {
+        // Any other layer present ⇒ breathing effect
+        rgblight_mode(RGBLIGHT_MODE_BREATHING);
+    }
+
+    /* Apply per-layer colours */
+    for (int layer = 1; layer <= _FIFTEEN; ++layer) {
         rgblight_set_layer_state(layer, layer_state_cmp(state, layer));
+    }
 }
 
 static bool is_rgb_on = false;
