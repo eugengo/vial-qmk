@@ -27,6 +27,7 @@ vial_config_t vial_config;
 typedef enum {
     OLED_STATUS_CLASSIC = 0,
     OLED_STATUS_MODERN,
+    OLED_STATUS_DARKSIDE,
     OLED_SPACESHIP,
     OLED_MEDIA_VER,
     OLED_MEDIA_HOR,
@@ -37,8 +38,8 @@ oled_mode_t get_oled_mode_on_half(bool on_master) {
     if (on_master) return vial_config.oled_master;
 
     // first two modes swapped for slave
-    if (vial_config.oled_slave == OLED_STATUS_CLASSIC) return OLED_SPLASH;
-    if (vial_config.oled_slave == OLED_SPLASH) return OLED_STATUS_CLASSIC;
+    if (vial_config.oled_slave == OLED_STATUS_CLASSIC) return OLED_SPACESHIP;
+    if (vial_config.oled_slave == OLED_SPACESHIP) return OLED_STATUS_CLASSIC;
 
     return vial_config.oled_slave;
 }
@@ -104,6 +105,142 @@ void render_status_classic(void) {
     oled_set_cursor(0, 15);
     bool caps = host_keyboard_led_state().caps_lock || split_get_caps_word();
     oled_write_P(PSTR("CPSLK"), caps);
+}
+
+// Renders the logo and optionally WPM
+void render_logo(bool show_wpm) {
+    static const char PROGMEM corne_logo[] = {
+        0x80, 0x81, 0x82, 0x83, 0x84,
+        0xa0, 0xa1, 0xa2, 0xa3, 0xa4,
+        0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0
+    };
+    oled_write_P(corne_logo, false);
+    if (show_wpm) {
+        char wpm_str[8];
+        snprintf(wpm_str, sizeof(wpm_str), ">>%03d", get_current_wpm());
+        oled_write(wpm_str, false);
+    } else {
+        oled_write_P(PSTR("Gio*K"), false);
+    }
+}
+
+// Renders the current layer state
+void render_layer_state(void) {
+    static const char PROGMEM default_layer[] = {
+        0x20, 0x94, 0x95, 0x96, 0x20,
+        0x20, 0xb4, 0xb5, 0xb6, 0x20,
+        0x20, 0xd4, 0xd5, 0xd6, 0x20, 0
+    };
+    static const char PROGMEM raise_layer[] = {
+        0x20, 0x97, 0x98, 0x99, 0x20,
+        0x20, 0xb7, 0xb8, 0xb9, 0x20,
+        0x20, 0xd7, 0xd8, 0xd9, 0x20, 0
+    };
+    static const char PROGMEM lower_layer[] = {
+        0x20, 0x9a, 0x9b, 0x9c, 0x20,
+        0x20, 0xba, 0xbb, 0xbc, 0x20,
+        0x20, 0xda, 0xdb, 0xdc, 0x20, 0
+    };
+    if (layer_state_is(_LOWER)) {
+        oled_write_P(lower_layer, false);
+    } else if (layer_state_is(_RAISE)) {
+        oled_write_P(raise_layer, false);
+    } else {
+        oled_write_P(default_layer, false);
+    }
+}
+
+// Renders modifier status (GUI/ALT or CTRL/SHIFT)
+void render_mod_status(uint8_t modifiers, bool gui_alt) {
+    // Icon sets for GUI/ALT and CTRL/SHIFT
+    static const char PROGMEM icons[][2][3] = {
+        // [0] = off, [1] = on
+        // GUI/CTRL
+        {{0x85, 0x86, 0}, {0x8d, 0x8e, 0}}, // GUI
+        {{0x87, 0x88, 0}, {0x8f, 0x90, 0}}, // ALT
+        {{0x89, 0x8a, 0}, {0x91, 0x92, 0}}, // CTRL
+        {{0x8b, 0x8c, 0}, {0xcd, 0xce, 0}}, // SHIFT
+        // Second row
+        {{0xa5, 0xa6, 0}, {0xad, 0xae, 0}}, // GUI
+        {{0xa7, 0xa8, 0}, {0xaf, 0xb0, 0}}, // ALT
+        {{0xa9, 0xaa, 0}, {0xb1, 0xb2, 0}}, // CTRL
+        {{0xab, 0xac, 0}, {0xcf, 0xd0, 0}}, // SHIFT
+    };
+    // Fillers between icons
+    static const char PROGMEM fillers[4][2][2] = {
+        {{0xc5, 0}, {0xcb, 0}}, // off_off, on_on
+        {{0xc7, 0}, {0xc9, 0}}, // on_off, off_on
+        {{0xc6, 0}, {0xcc, 0}}, // off_off_2, on_on_2
+        {{0xc8, 0}, {0xca, 0}}, // on_off_2, off_on_2
+    };
+
+    if (gui_alt) {
+        // GUI/ALT row 1
+        oled_write_P(icons[0][(modifiers & MOD_MASK_GUI) ? 1 : 0], false);
+        if ((modifiers & MOD_MASK_GUI) && (modifiers & MOD_MASK_ALT)) {
+            oled_write_P(fillers[0][1], false);
+        } else if (modifiers & MOD_MASK_GUI) {
+            oled_write_P(fillers[1][0], false);
+        } else if (modifiers & MOD_MASK_ALT) {
+            oled_write_P(fillers[1][1], false);
+        } else {
+            oled_write_P(fillers[0][0], false);
+        }
+        oled_write_P(icons[1][(modifiers & MOD_MASK_ALT) ? 1 : 0], false);
+        // GUI/ALT row 2
+        oled_write_P(icons[4][(modifiers & MOD_MASK_GUI) ? 1 : 0], false);
+        if ((modifiers & MOD_MASK_GUI) && (modifiers & MOD_MASK_ALT)) {
+            oled_write_P(fillers[2][1], false);
+        } else if (modifiers & MOD_MASK_GUI) {
+            oled_write_P(fillers[3][0], false);
+        } else if (modifiers & MOD_MASK_ALT) {
+            oled_write_P(fillers[3][1], false);
+        } else {
+            oled_write_P(fillers[2][0], false);
+        }
+        oled_write_P(icons[5][(modifiers & MOD_MASK_ALT) ? 1 : 0], false);
+    } else {
+        // CTRL/SHIFT row 1
+        oled_write_P(icons[2][(modifiers & MOD_MASK_CTRL) ? 1 : 0], false);
+        if ((modifiers & MOD_MASK_CTRL) && (modifiers & MOD_MASK_SHIFT)) {
+            oled_write_P(fillers[0][1], false);
+        } else if (modifiers & MOD_MASK_CTRL) {
+            oled_write_P(fillers[1][0], false);
+        } else if (modifiers & MOD_MASK_SHIFT) {
+            oled_write_P(fillers[1][1], false);
+        } else {
+            oled_write_P(fillers[0][0], false);
+        }
+        oled_write_P(icons[3][(modifiers & MOD_MASK_SHIFT) ? 1 : 0], false);
+        // CTRL/SHIFT row 2
+        oled_write_P(icons[6][(modifiers & MOD_MASK_CTRL) ? 1 : 0], false);
+        if ((modifiers & MOD_MASK_CTRL) && (modifiers & MOD_MASK_SHIFT)) {
+            oled_write_P(fillers[2][1], false);
+        } else if (modifiers & MOD_MASK_CTRL) {
+            oled_write_P(fillers[3][0], false);
+        } else if (modifiers & MOD_MASK_SHIFT) {
+            oled_write_P(fillers[3][1], false);
+        } else {
+            oled_write_P(fillers[2][0], false);
+        }
+        oled_write_P(icons[7][(modifiers & MOD_MASK_SHIFT) ? 1 : 0], false);
+    }
+}
+
+// Main unified status render function
+void render_status_darkside(bool is_master, bool show_wpm) {
+    // Render logo (with or without WPM)
+    render_logo(show_wpm);
+    render_space();
+
+    // Render current layer
+    render_layer_state();
+    render_space();
+
+    // Render modifier status
+    uint8_t mods = get_mods() | get_oneshot_mods();
+    render_mod_status(mods, true);  // GUI/ALT
+    render_mod_status(mods, false); // CTRL/SHIFT
 }
 
 void render_status_modern(void) {
@@ -310,6 +447,10 @@ bool oled_task_kb(void) {
         case OLED_MEDIA_VER:
             render_media_ver();
             break;
+
+        case OLED_STATUS_DARKSIDE:
+                  render_darkside();
+                  break;
 
       case OLED_SPACESHIP:
             render_spaceship();

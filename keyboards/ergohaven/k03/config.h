@@ -45,4 +45,4 @@
 
 #define TAP_CODE_DELAY 1
 
-#define EH_SHORT_PRODUCT_NAME "K:03H"
+#define EH_SHORT_PRODUCT_NAME "K:03h"
