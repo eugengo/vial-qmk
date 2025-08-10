@@ -453,7 +453,7 @@ bool oled_task_kb(void) {
             break;
 
         case OLED_STATUS_DARKSIDE:
-                  render_darkside();
+                  render_status_darkside();
                   break;
 
       case OLED_SPACESHIP:
