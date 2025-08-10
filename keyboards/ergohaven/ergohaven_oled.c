@@ -107,6 +107,10 @@ void render_status_classic(void) {
     oled_write_P(PSTR("CPSLK"), caps);
 }
 
+void render_space(void) {
+    oled_write_P(PSTR("     "), false);
+}
+
 // Renders the logo and optionally WPM
 void render_logo(bool show_wpm) {
     static const char PROGMEM corne_logo[] = {
