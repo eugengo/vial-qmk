@@ -63,7 +63,7 @@ bool split_get_caps_word(void) {
 oled_rotation_t get_desired_oled_rotation(void) {
     int mode = get_oled_mode();
     switch (mode) {
-        case OLED_SPACESHIP:
+        //case OLED_SPACESHIP:
         case OLED_MEDIA_HOR:
             return is_keyboard_left() ? OLED_ROTATION_0 : OLED_ROTATION_180;
             break;
@@ -113,19 +113,13 @@ void render_space(void) {
 
 // Renders the logo and optionally WPM
 void render_logo(bool show_wpm) {
-    static const char PROGMEM corne_logo[] = {
+    static const char PROGMEM dark_logo[] = {
         0x80, 0x81, 0x82, 0x83, 0x84,
         0xa0, 0xa1, 0xa2, 0xa3, 0xa4,
         0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0
     };
-    oled_write_P(corne_logo, false);
-    if (show_wpm) {
-        char wpm_str[8];
-        snprintf(wpm_str, sizeof(wpm_str), ">>%03d", get_current_wpm());
-        oled_write(wpm_str, false);
-    } else {
-        oled_write_P(PSTR("Gio*K"), false);
-    }
+    oled_write_P(dark_logo, false);
+    oled_write_P(PSTR("Nyan"), false);
 }
 
 // Renders the current layer state
