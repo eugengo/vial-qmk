@@ -119,7 +119,7 @@ void render_logo(bool show_wpm) {
         0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0
     };
     oled_write_P(dark_logo, false);
-    oled_write_P(PSTR("Nyan"), false);
+    //oled_write_P(PSTR("Nyan"), false);
 }
 
 // Renders the current layer state
