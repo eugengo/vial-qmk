@@ -9,8 +9,8 @@
     "labels": [
       "Hide left encoder",
       "Hide right encoder",
-      [ "OLED Master", "Status (classic)", "Splash screen", "Status (modern)", "Status (darkside)", "Spaceship", "Clock & Volume (qmk-hid-host)", "Media (qmk-hid-host)", "Disabled" ],
-      [ "OLED Slave", "Splash screen", "Status (classic)", "Status (modern)", "Status (darkside)", "Spaceship", "Clock & Volume (qmk-hid-host)", "Media (qmk-hid-host)", "Disabled" ]
+      [ "OLED Master", "Status (classic)", "Splash screen", "Status (darkside)", "Status (modern)", "Spaceship", "Clock & Volume (qmk-hid-host)", "Media (qmk-hid-host)", "Disabled" ],
+      [ "OLED Slave", "Splash screen", "Status (classic)", "Status (darkside)", "Status (modern)", "Spaceship", "Clock & Volume (qmk-hid-host)", "Media (qmk-hid-host)", "Disabled" ]
     ],
     "keymap": [
       [{"y":0.4},"0,5","0,4",{"y":-0.45},"0,3",{"y":-0.1},"0,2",{"y":0.1},"0,1",{"y":0.15},"0,0"],
