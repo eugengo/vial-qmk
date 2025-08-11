@@ -220,7 +220,7 @@ void render_mod_status(uint8_t modifiers, bool gui_alt) {
 // Main unified status render function
 void render_status_darkside(bool is_master) {
     // Render logo (with or without WPM)
-    render_logo();
+    //render_logo();
     render_space();
 
     // Render current layer
