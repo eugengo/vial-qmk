@@ -104,6 +104,11 @@ void render_space(void) {
     oled_write_P(PSTR("     "), false);
 }
 
+//
+void render_name(void) {
+     oled_write_P(EH_SHORT_PRODUCT_NAME, false);
+}
+
 // Renders the logo and optionally WPM
 void render_logo(void) {
     static const char PROGMEM dark_logo[] = {
@@ -221,7 +226,8 @@ void render_mod_status(uint8_t modifiers, bool gui_alt) {
 void render_status_darkside(bool is_master) {
     // Render logo (with or without WPM)
     //render_logo();
-    render_space();
+    //render_space();
+    render_name();
 
     // Render current layer
     render_layer_state();
@@ -242,33 +248,12 @@ void render_status_modern(void) {
     else
         oled_write_P(PSTR("          "), false);
 
-    oled_set_cursor(0, 2);
-    oled_write(split_get_lang() == LANG_EN ? "EN" : "RU", false);
-
     oled_set_cursor(0, 4);
     led_t led_usb_state = host_keyboard_led_state();
     bool  caps          = led_usb_state.caps_lock || split_get_caps_word();
     oled_write_P(led_usb_state.num_lock ? PSTR("NUM\07\10") : PSTR("NUM\05\06"), false);
     oled_write_P(caps ? PSTR("CPS\07\10") : PSTR("CPS\05\06"), false);
     oled_write_P(led_usb_state.scroll_lock ? PSTR("SCR\07\10") : PSTR("SCR\05\06"), false);
-
-    oled_set_cursor(0, 8);
-    uint8_t mods = get_mods() | get_oneshot_mods();
-    oled_write_P(mods & MOD_MASK_SHIFT ? PSTR("SFT\07\10") : PSTR("SFT\05\06"), false);
-    oled_write_P(mods & MOD_MASK_CTRL ? PSTR("CTL\07\10") : PSTR("CTL\05\06"), false);
-    oled_write_P(mods & MOD_MASK_ALT ? PSTR("ALT\07\10") : PSTR("ALT\05\06"), false);
-    oled_write_P(mods & MOD_MASK_GUI ? PSTR("GUI\07\10") : PSTR("GUI\05\06"), false);
-
-    char buf[16];
-    int  wpm = get_current_wpm();
-    if (wpm < 10)
-        sprintf(buf, "WPM %d", wpm);
-    else if (wpm < 100)
-        sprintf(buf, "W  %d", wpm);
-    else
-        sprintf(buf, "W %d", wpm);
-    oled_set_cursor(0, 13);
-    oled_write_ln(buf, false);
 }
 
 void render_big_num(int num, char* c0, char* c1, char* c2, char* c3) {
@@ -315,7 +300,6 @@ bool oled_task_kb(void) {
             break;
 
         case OLED_STATUS_DARKSIDE:
-                  //render_status_darkside();
                   render_status_darkside(is_keyboard_master());
                   break;
 
