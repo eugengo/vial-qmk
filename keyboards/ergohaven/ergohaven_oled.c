@@ -201,7 +201,7 @@ void render_mod_status(uint8_t modifiers, bool gui_alt) {
 void render_status_darkside(bool is_master) {
     // Render logo (with or without WPM)
     render_name();
-    //render_space();
+    render_space();
     //oled_clear();
     render_apple_logo();
 
@@ -212,16 +212,16 @@ void render_status_darkside(bool is_master) {
     // Render modifier status
     uint8_t mods = get_mods() | get_oneshot_mods();
     render_mod_status(mods, true);  // GUI/ALT
-    render_mod_status(mods, false); // CTRL/SHIFT
+    //render_mod_status(mods, false); // CTRL/SHIFT
 }
 
 void render_status_modern(void) {
     oled_clear();
     oled_write_ln(layer_upper_name(get_current_layer()), false);
     oled_set_cursor(0, 1);
-    if (split_get_mac())
-        oled_write_P(PSTR("   \01\02   \03\04"), false);
-    else
+
+        oled_write_P(PSTR("   \00\01   \02\03"), false);
+
         oled_write_P(PSTR("          "), false);
 
     oled_set_cursor(0, 4);
