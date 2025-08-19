@@ -111,12 +111,12 @@ void render_name(void) {
 
 // Renders the logo and optionally WPM
 void render_apple_logo(void) {
-    uint8_t screen_width = oled_max_x(); // Обычно 128
-    uint8_t logo_width = 12; // 2 символа * 6 пикселей
+    uint8_t screen_width = 128;
+    uint8_t logo_width = 12;
     uint8_t x = (screen_width - logo_width) / 2;
     uint8_t col = x / 6;
 
-    oled_set_cursor(col, 0); // верхняя строка
+    oled_set_cursor(col, 0);
     static const char PROGMEM apple_logo[] = {
         0x00, 0x01, '\n', 0x02, 0x03, 0
     };
