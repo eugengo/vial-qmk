@@ -110,39 +110,17 @@ void render_name(void) {
 }
 
 // Renders the logo and optionally WPM
-void render_logo(void) {
-    static const char PROGMEM dark_logo[] = {
-        0x80, 0x81, 0x82, 0x83, 0x84,
-        0xa0, 0xa1, 0xa2, 0xa3, 0xa4,
-        0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0
-    };
-    oled_write_P(dark_logo, false);
-}
+void render_apple_logo(void) {
+    uint8_t screen_width = oled_max_x(); // Обычно 128
+    uint8_t logo_width = 12; // 2 символа * 6 пикселей
+    uint8_t x = (screen_width - logo_width) / 2;
+    uint8_t col = x / 6;
 
-// Renders the current layer state
-void render_layer_state(void) {
-    static const char PROGMEM default_layer[] = {
-        0x20, 0x94, 0x95, 0x96, 0x20,
-        0x20, 0xb4, 0xb5, 0xb6, 0x20,
-        0x20, 0xd4, 0xd5, 0xd6, 0x20, 0
+    oled_set_cursor(col, 0); // верхняя строка
+    static const char PROGMEM apple_logo[] = {
+        0x00, 0x01, '\n', 0x02, 0x03, 0
     };
-    static const char PROGMEM raise_layer[] = {
-        0x20, 0x97, 0x98, 0x99, 0x20,
-        0x20, 0xb7, 0xb8, 0xb9, 0x20,
-        0x20, 0xd7, 0xd8, 0xd9, 0x20, 0
-    };
-    static const char PROGMEM lower_layer[] = {
-        0x20, 0x9a, 0x9b, 0x9c, 0x20,
-        0x20, 0xba, 0xbb, 0xbc, 0x20,
-        0x20, 0xda, 0xdb, 0xdc, 0x20, 0
-    };
-    if (layer_state_is(_LOWER)) {
-        oled_write_P(lower_layer, false);
-    } else if (layer_state_is(_RAISE)) {
-        oled_write_P(raise_layer, false);
-    } else {
-        oled_write_P(default_layer, false);
-    }
+    oled_write_P(apple_logo, false);
 }
 
 // Renders modifier status (GUI/ALT or CTRL/SHIFT)
@@ -151,22 +129,22 @@ void render_mod_status(uint8_t modifiers, bool gui_alt) {
     static const char PROGMEM icons[][2][3] = {
         // [0] = off, [1] = on
         // GUI/CTRL
-        {{0x85, 0x86, 0}, {0x8d, 0x8e, 0}}, // GUI
-        {{0x87, 0x88, 0}, {0x8f, 0x90, 0}}, // ALT
-        {{0x89, 0x8a, 0}, {0x91, 0x92, 0}}, // CTRL
-        {{0x8b, 0x8c, 0}, {0xcd, 0xce, 0}}, // SHIFT
+        {{0x80, 0x81, 0}, {0x88, 0x89, 0}}, // GUI
+        {{0x82, 0x83, 0}, {0x8a, 0x8b, 0}}, // ALT
+        {{0x84, 0x85, 0}, {0x8c, 0x8d, 0}}, // CTRL
+        {{0x86, 0x87, 0}, {0x8e, 0x8f, 0}}, // SHIFT
         // Second row
-        {{0xa5, 0xa6, 0}, {0xad, 0xae, 0}}, // GUI
-        {{0xa7, 0xa8, 0}, {0xaf, 0xb0, 0}}, // ALT
-        {{0xa9, 0xaa, 0}, {0xb1, 0xb2, 0}}, // CTRL
-        {{0xab, 0xac, 0}, {0xcf, 0xd0, 0}}, // SHIFT
+        {{0xa0, 0xa1, 0}, {0xa8, 0xa9, 0}}, // GUI
+        {{0xa2, 0xa3, 0}, {0xaa, 0xab, 0}}, // ALT
+        {{0xa4, 0xa5, 0}, {0xac, 0xad, 0}}, // CTRL
+        {{0xa6, 0xa7, 0}, {0xae, 0xaf, 0}}, // SHIFT
     };
     // Fillers between icons
     static const char PROGMEM fillers[4][2][2] = {
-        {{0xc5, 0}, {0xcb, 0}}, // off_off, on_on
-        {{0xc7, 0}, {0xc9, 0}}, // on_off, off_on
-        {{0xc6, 0}, {0xcc, 0}}, // off_off_2, on_on_2
-        {{0xc8, 0}, {0xca, 0}}, // on_off_2, off_on_2
+        {{0xc0, 0}, {0xc6, 0}}, // off_off, on_on
+        {{0xc2, 0}, {0xc4, 0}}, // on_off, off_on
+        {{0xc1, 0}, {0xc7, 0}}, // off_off_2, on_on_2
+        {{0xc3, 0}, {0xc5, 0}}, // on_off_2, off_on_2
     };
 
     if (gui_alt) {
@@ -227,6 +205,7 @@ void render_status_darkside(bool is_master) {
     // Render logo (with or without WPM)
     //render_logo();
     //render_space();
+    oled_clear();
     render_name();
 
     // Render current layer
