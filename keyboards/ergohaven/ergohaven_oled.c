@@ -111,12 +111,12 @@ void render_name(void) {
 
 // Renders the logo and optionally WPM
 void render_apple_logo(void) {
-    uint8_t screen_width = 128;
-    uint8_t logo_width = 12;
-    uint8_t x = (screen_width - logo_width) / 2;
-    uint8_t col = x / 6;
+    //uint8_t screen_width = 128;
+    //uint8_t logo_width = 12;
+    //uint8_t x = (screen_width - logo_width) / 2;
+    //uint8_t col = x / 6;
 
-    oled_set_cursor(col, 0);
+    //oled_set_cursor(col, 0);
     oled_write_P(PSTR("   \00\01   \02\03"), false);
 }
 
