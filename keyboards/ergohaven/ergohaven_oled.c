@@ -117,10 +117,7 @@ void render_apple_logo(void) {
     uint8_t col = x / 6;
 
     oled_set_cursor(col, 0);
-    static const char PROGMEM apple_logo[] = {
-        0x00, 0x01, '\n', 0x02, 0x03, 0
-    };
-    oled_write_P(apple_logo, false);
+    oled_write_P(PSTR("   \00\01   \02\03"), false);
 }
 
 // Renders modifier status (GUI/ALT or CTRL/SHIFT)
