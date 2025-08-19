@@ -122,6 +122,7 @@ void render_apple_logo(void) {
 
 // Renders modifier status (GUI/ALT or CTRL/SHIFT)
 void render_mod_status(uint8_t modifiers, bool gui_alt) {
+    oled_set_cursor(0, 5);
     // Icon sets for GUI/ALT and CTRL/SHIFT
     static const char PROGMEM icons[][2][3] = {
         // [0] = off, [1] = on
@@ -200,10 +201,10 @@ void render_mod_status(uint8_t modifiers, bool gui_alt) {
 // Main unified status render function
 void render_status_darkside(bool is_master) {
     // Render logo (with or without WPM)
-    render_name();
-    render_space();
-    //oled_clear();
-    render_apple_logo();
+    //render_name();
+    //render_space();
+    oled_clear();
+    //render_apple_logo();
 
     // Render current layer
     //render_layer_state();
