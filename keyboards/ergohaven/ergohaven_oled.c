@@ -203,10 +203,10 @@ void render_mod_status(uint8_t modifiers, bool gui_alt) {
 // Main unified status render function
 void render_status_darkside(bool is_master) {
     // Render logo (with or without WPM)
-    render_logo();
+    render_name();
     render_space();
     //oled_clear();
-    //render_name();
+    render_apple_logo();
 
     // Render current layer
     //render_layer_state();
