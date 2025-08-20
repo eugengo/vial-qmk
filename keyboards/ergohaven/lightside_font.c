@@ -4,6 +4,7 @@
 // Online editor: https://helixfonteditor.netlify.com/
 // See also: https://github.com/soundmonster/glcdfont_converter
 
+
 const unsigned char font[] PROGMEM = {
     0xC0, 0xE3, 0xF6, 0xF6, 0xEC, 0xB2,
     0x30, 0xE0, 0xC0, 0x00, 0x00, 0x00,
