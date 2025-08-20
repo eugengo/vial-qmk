@@ -36,8 +36,8 @@ oled_mode_t get_oled_mode_on_half(bool on_master) {
     if (on_master) return vial_config.oled_master;
 
     // first two modes swapped for slave
-    if (vial_config.oled_slave == OLED_STATUS_DARKSIDE) return OLED_SPACESHIP;
-    if (vial_config.oled_slave == OLED_SPACESHIP) return OLED_STATUS_DARKSIDE;
+    if (vial_config.oled_slave == OLED_STATUS_DARKSIDE) return OLED_STATUS_MODERN;
+    if (vial_config.oled_slave == OLED_STATUS_MODERN) return OLED_STATUS_DARKSIDE;
 
     return vial_config.oled_slave;
 }
