@@ -205,7 +205,7 @@ void render_mod_status(uint8_t modifiers, bool gui_alt) {
 void render_status_darkside(bool is_master) {
     // Render logo (with or without WPM)
     render_name();
-    render_space();
+    //render_space();
     //oled_clear();
     render_apple_logo();
 
