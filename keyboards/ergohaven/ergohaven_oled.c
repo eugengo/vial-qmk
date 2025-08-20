@@ -125,7 +125,7 @@ void render_apple_logo(void) {
 
 // Renders modifier status (GUI/ALT or CTRL/SHIFT)
 void render_mod_status(uint8_t modifiers, bool gui_alt) {
-    oled_set_cursor(0, 5);
+    //oled_set_cursor(0, 5);
     // Icon sets for GUI/ALT and CTRL/SHIFT
     static const char PROGMEM icons[][2][3] = {
         // [0] = off, [1] = on
