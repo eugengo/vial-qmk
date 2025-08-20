@@ -7,7 +7,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-#include "spaceship.c"
+//#include "spaceship.c"
 
 typedef union {
     uint32_t raw;
@@ -28,7 +28,7 @@ typedef enum {
     OLED_STATUS_CLASSIC = 0,
     OLED_STATUS_MODERN,
     OLED_STATUS_DARKSIDE,
-    OLED_SPACESHIP,
+    //OLED_SPACESHIP,
     OLED_DISABLED,
 } oled_mode_t;
 
@@ -280,9 +280,6 @@ bool oled_task_kb(void) {
                   render_status_darkside(is_keyboard_master());
                   break;
 
-        case OLED_SPACESHIP:
-            render_spaceship();
-            break;
 
         case OLED_DISABLED:
         default:
