@@ -59,13 +59,10 @@ bool split_get_caps_word(void) {
 }
 
 oled_rotation_t get_desired_oled_rotation(void) {
-    int mode = get_oled_mode();
-    switch (mode) {
-        case OLED_SPACESHIP:
-            return is_keyboard_left() ? OLED_ROTATION_0 : OLED_ROTATION_180;
-            break;
-        default:
-            return OLED_ROTATION_270;
+    if (is_keyboard_left()) {
+        return OLED_ROTATION_0;
+    } else {
+        return OLED_ROTATION_270;
     }
 }
 
