@@ -106,22 +106,18 @@ void render_space(void) {
 
 //
 void render_name(void) {
-    oled_set_cursor(1, 1);
      oled_write_P(EH_SHORT_PRODUCT_NAME, false);
 }
 
 // Renders the logo and optionally WPM
 void render_apple_logo(void) {
-    //uint8_t screen_width = 128;
-    //uint8_t logo_width = 12;
-    //uint8_t x = (screen_width - logo_width) / 2;
-    //uint8_t col = x / 6;
-    static const char PROGMEM apple_logo[] = {
-            0x00, 0x01,
-            0x02, 0x03, 0x00
-        };
-    //oled_set_cursor(col, 0);
-    oled_write_P(apple_logo, false);
+    static const uint8_t apple_logo[4] = {0x00, 0x01, 0x02, 0x03};
+    oled_set_cursor(0, 3);
+    oled_write_char(apple_logo[0], false);
+    oled_write_char(apple_logo[1], false);
+    oled_set_cursor(0, 4);
+    oled_write_char(apple_logo[2], false);
+    oled_write_char(apple_logo[3], false);
 }
 
 // Renders modifier status (GUI/ALT or CTRL/SHIFT)
