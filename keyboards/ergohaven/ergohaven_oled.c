@@ -106,6 +106,7 @@ void render_space(void) {
 
 //
 void render_name(void) {
+    oled_set_cursor(1, 1);
      oled_write_P(EH_SHORT_PRODUCT_NAME, false);
 }
 
