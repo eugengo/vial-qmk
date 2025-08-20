@@ -115,9 +115,12 @@ void render_apple_logo(void) {
     //uint8_t logo_width = 12;
     //uint8_t x = (screen_width - logo_width) / 2;
     //uint8_t col = x / 6;
-
+    static const char PROGMEM apple_logo[] = {
+            0x00, 0x01,
+            0x02, 0x03, 0x00
+        };
     //oled_set_cursor(col, 0);
-    oled_write_P(PSTR("   \00\01   \02\03"), false);
+    oled_write_P(apple_logo, false);
 }
 
 // Renders modifier status (GUI/ALT or CTRL/SHIFT)
@@ -201,10 +204,10 @@ void render_mod_status(uint8_t modifiers, bool gui_alt) {
 // Main unified status render function
 void render_status_darkside(bool is_master) {
     // Render logo (with or without WPM)
-    //render_name();
-    //render_space();
+    render_name();
+    render_space();
     oled_clear();
-    //render_apple_logo();
+    render_apple_logo();
 
     // Render current layer
     //render_layer_state();
@@ -213,7 +216,7 @@ void render_status_darkside(bool is_master) {
     // Render modifier status
     uint8_t mods = get_mods() | get_oneshot_mods();
     render_mod_status(mods, true);  // GUI/ALT
-    //render_mod_status(mods, false); // CTRL/SHIFT
+    render_mod_status(mods, false); // CTRL/SHIFT
 }
 
 void render_status_modern(void) {
