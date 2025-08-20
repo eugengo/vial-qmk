@@ -206,7 +206,7 @@ void render_status_darkside(bool is_master) {
     // Render logo (with or without WPM)
     render_name();
     render_space();
-    oled_clear();
+    //oled_clear();
     render_apple_logo();
 
     // Render current layer
