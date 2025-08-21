@@ -133,7 +133,7 @@ void render_apple_logo(void) {
 
 // Renders modifier status (GUI/ALT or CTRL/SHIFT)
 void render_mod_status(uint8_t modifiers, bool gui_alt) {
-    //oled_set_cursor(0, 5);
+    //oled_set_cursor(0, 6);
     // Icon sets for GUI/ALT and CTRL/SHIFT
     static const char PROGMEM icons[][2][3] = {
         // [0] = off, [1] = on
@@ -232,10 +232,8 @@ void render_status_modern(void) {
     render_version();
     render_space();
     render_apple_logo();
-    render_space();
-    oled_write_ln(layer_upper_name(get_current_layer()), false);
 
-    oled_set_cursor(0, 8);
+    oled_set_cursor(0, 5);
     led_t led_usb_state = host_keyboard_led_state();
     bool  caps          = led_usb_state.caps_lock || split_get_caps_word();
 
@@ -255,6 +253,8 @@ void render_status_modern(void) {
         led_usb_state.scroll_lock
             ? PSTR("s\x90\x91\x92\x93")
             : PSTR("s\x94\x95\x96\x97"), false);
+    render_space();
+    oled_write_ln(layer_upper_name(get_current_layer()), false);
 }
 
 void render_big_num(int num, char* c0, char* c1, char* c2, char* c3) {
