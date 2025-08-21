@@ -219,7 +219,7 @@ void render_status_darkside(bool is_master) {
 
     // Render current layer
     //render_layer_state();
-    //render_space();
+    render_space();
 
     // Render modifier status
     uint8_t mods = get_mods() | get_oneshot_mods();
