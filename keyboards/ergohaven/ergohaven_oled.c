@@ -109,6 +109,10 @@ void render_name(void) {
      oled_write_P(EH_SHORT_PRODUCT_NAME, false);
 }
 
+void render_version(void) {
+    oled_write_P(PSTR(EH_VERSION_STR), false);
+}
+
 // Renders the logo and optionally WPM
 void render_apple_logo(void) {
     static const uint8_t apple_logo[] = {0x20, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05};
@@ -225,6 +229,10 @@ void render_status_darkside(bool is_master) {
 
 void render_status_modern(void) {
     oled_clear();
+    render_version();
+    render_space();
+    render_apple_logo();
+    render_space();
     oled_write_ln(layer_upper_name(get_current_layer()), false);
     oled_set_cursor(0, 1);
 
