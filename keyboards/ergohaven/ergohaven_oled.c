@@ -234,18 +234,13 @@ void render_status_modern(void) {
     render_apple_logo();
     render_space();
     oled_write_ln(layer_upper_name(get_current_layer()), false);
-    oled_set_cursor(0, 7);
-
-        oled_write_P(PSTR("   \00\01   \02\03"), false);
-
-        oled_write_P(PSTR("          "), false);
 
     oled_set_cursor(0, 8);
     led_t led_usb_state = host_keyboard_led_state();
     bool  caps          = led_usb_state.caps_lock || split_get_caps_word();
-    oled_write_P(led_usb_state.num_lock ? PSTR("NUM\07\10") : PSTR("NUM\05\06"), false);
-    oled_write_P(caps ? PSTR("CPS\07\10") : PSTR("CPS\05\06"), false);
-    oled_write_P(led_usb_state.scroll_lock ? PSTR("SCR\07\10") : PSTR("SCR\05\06"), false);
+    oled_write_P(led_usb_state.num_lock ? PSTR("N\90\91\92\93") : PSTR("N\94\95\96\97"), false);
+    oled_write_P(caps ? PSTR("C\90\91\92\93") : PSTR("C\94\95\96\97"), false);
+    oled_write_P(led_usb_state.scroll_lock ? PSTR("S\90\91\92\93") : PSTR("S\94\95\96\97"), false);
 }
 
 void render_big_num(int num, char* c0, char* c1, char* c2, char* c3) {
