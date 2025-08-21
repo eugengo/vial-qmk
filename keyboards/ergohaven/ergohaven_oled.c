@@ -234,13 +234,13 @@ void render_status_modern(void) {
     render_apple_logo();
     render_space();
     oled_write_ln(layer_upper_name(get_current_layer()), false);
-    oled_set_cursor(0, 1);
+    oled_set_cursor(0, 7);
 
         oled_write_P(PSTR("   \00\01   \02\03"), false);
 
         oled_write_P(PSTR("          "), false);
 
-    oled_set_cursor(0, 4);
+    oled_set_cursor(0, 8);
     led_t led_usb_state = host_keyboard_led_state();
     bool  caps          = led_usb_state.caps_lock || split_get_caps_word();
     oled_write_P(led_usb_state.num_lock ? PSTR("NUM\07\10") : PSTR("NUM\05\06"), false);
