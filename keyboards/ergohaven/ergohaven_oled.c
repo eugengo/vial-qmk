@@ -238,9 +238,16 @@ void render_status_modern(void) {
     oled_set_cursor(0, 8);
     led_t led_usb_state = host_keyboard_led_state();
     bool  caps          = led_usb_state.caps_lock || split_get_caps_word();
-    oled_write_P(led_usb_state.num_lock ? PSTR("N\90\91\92\93") : PSTR("N\94\95\96\97"), false);
+
+    oled_write_P(
+        led_usb_state.scroll_lock
+            ? PSTR("s\x90\x91\x92\x93") // первая группа глифов
+            : PSTR("s\x94\x95\x96\x97"), // вторая группа глифов
+        false
+    );
+
     oled_write_P(caps ? PSTR("C\90\91\92\93") : PSTR("C\94\95\96\97"), false);
-    oled_write_P(led_usb_state.scroll_lock ? PSTR("S\90\91\92\93") : PSTR("S\94\95\96\97"), false);
+    oled_write_P(led_usb_state.scroll_lock ? PSTR("S\90\91\92\93") : PSTR("S\05\06"), false);
 }
 
 void render_big_num(int num, char* c0, char* c1, char* c2, char* c3) {
