@@ -240,14 +240,21 @@ void render_status_modern(void) {
     bool  caps          = led_usb_state.caps_lock || split_get_caps_word();
 
     oled_write_P(
-        led_usb_state.scroll_lock
-            ? PSTR("s\x90\x91\x92\x93") // первая группа глифов
-            : PSTR("s\x94\x95\x96\x97"), // вторая группа глифов
+        led_usb_state.num_lock
+            ? PSTR("n\x90\x91\x92\x93") // первая группа глифов
+            : PSTR("n\x94\x95\x96\x97"), // вторая группа глифов
         false
     );
 
-    oled_write_P(caps ? PSTR("C\90\91\92\93") : PSTR("C\94\95\96\97"), false);
-    oled_write_P(led_usb_state.scroll_lock ? PSTR("S\90\91\92\93") : PSTR("S\05\06"), false);
+    oled_write_P(
+        caps
+            ? PSTR("c\x90\x91\x92\x93")
+            : PSTR("c\x94\x95\x96\x97"), false);
+
+    oled_write_P(
+        led_usb_state.scroll_lock
+            ? PSTR("s\x90\x91\x92\x93")
+            : PSTR("s\x94\x95\x96\x97"), false);
 }
 
 void render_big_num(int num, char* c0, char* c1, char* c2, char* c3) {
