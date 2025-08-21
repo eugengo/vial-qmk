@@ -112,13 +112,13 @@ void render_name(void) {
 // Renders the logo and optionally WPM
 void render_apple_logo(void) {
     static const uint8_t apple_logo[] = {0x20, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05};
-    oled_set_cursor(0, 1);
+    oled_set_cursor(0, 2);
     oled_write_char(apple_logo[0], false);
     oled_write_char(apple_logo[1], false);
     oled_write_char(apple_logo[2], false);
     oled_write_char(apple_logo[3], false);
     oled_write_char(apple_logo[0], false);
-    oled_set_cursor(0, 2);
+    oled_set_cursor(0, 3);
     oled_write_char(apple_logo[0], false);
     oled_write_char(apple_logo[4], false);
     oled_write_char(apple_logo[5], false);
