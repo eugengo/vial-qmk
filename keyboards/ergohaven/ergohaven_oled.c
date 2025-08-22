@@ -6,6 +6,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <timer.h>
 
 #include "spaceship.c"
 
@@ -77,21 +78,8 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 }
 
 void render_status_classic(void) {
-    // Print current mode
-    oled_clear();
-    oled_write_P(EH_SHORT_PRODUCT_NAME, false);
-
-    oled_set_cursor(0, 2);
-    oled_write_P(PSTR(EH_VERSION_STR), false);
-
-    oled_set_cursor(0, 5);
-    oled_write_P("MODE:", false);
-    oled_set_cursor(0, 7);
-
 
     // Print current layer
-    oled_set_cursor(0, 10);
-    oled_write_P(PSTR("LAYER"), false);
     oled_set_cursor(0, 12);
     oled_write_P(PSTR(layer_name(get_current_layer())), false);
 
@@ -225,6 +213,22 @@ void render_status_darkside(bool is_master) {
     uint8_t mods = get_mods() | get_oneshot_mods();
     render_mod_status(mods, true);  // GUI/ALT
     render_mod_status(mods, false); // CTRL/SHIFT
+
+    oled_set_cursor(0, 11);
+        static uint32_t start_time = 0;
+        if (start_time == 0) start_time = timer_read32();
+
+        uint32_t elapsed = (timer_read32() - start_time) / 1000;
+        uint8_t hours = elapsed / 3600;
+        uint8_t minutes = (elapsed % 3600) / 60;
+        uint8_t seconds = elapsed % 60;
+
+        char buf[16];
+        snprintf(buf, sizeof(buf), "%02d:%02d", hours, minutes, seconds);
+        oled_write_ln(buf, false);
+
+
+
 }
 
 void render_status_modern(void) {
@@ -238,21 +242,10 @@ void render_status_modern(void) {
     bool  caps          = led_usb_state.caps_lock || split_get_caps_word();
 
     oled_write_P(
-        led_usb_state.num_lock
-            ? PSTR("n\x90\x91\x92\x93") // первая группа глифов
-            : PSTR("n\x94\x95\x96\x97"), // вторая группа глифов
-        false
-    );
-
-    oled_write_P(
         caps
             ? PSTR("c\x90\x91\x92\x93")
             : PSTR("c\x94\x95\x96\x97"), false);
 
-    oled_write_P(
-        led_usb_state.scroll_lock
-            ? PSTR("s\x90\x91\x92\x93")
-            : PSTR("s\x94\x95\x96\x97"), false);
     render_space();
     oled_write_ln(layer_upper_name(get_current_layer()), false);
 }
