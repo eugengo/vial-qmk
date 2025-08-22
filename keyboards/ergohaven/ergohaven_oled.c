@@ -215,17 +215,16 @@ void render_status_darkside(bool is_master) {
     render_mod_status(mods, false); // CTRL/SHIFT
 
     oled_set_cursor(0, 11);
-        static uint32_t start_time = 0;
-        if (start_time == 0) start_time = timer_read32();
+    static uint32_t start_time = 0;
+    if (start_time == 0) start_time = timer_read32();
 
-        uint32_t elapsed = (timer_read32() - start_time) / 1000;
-        uint8_t hours = elapsed / 3600;
-        uint8_t minutes = (elapsed % 3600) / 60;
-        uint8_t seconds = elapsed % 60;
+    uint32_t elapsed = (timer_read32() - start_time) / 1000;
+    uint8_t hours = elapsed / 3600;
+    uint8_t minutes = (elapsed % 3600) / 60;
 
-        char buf[16];
-        snprintf(buf, sizeof(buf), "%02d:%02d:%02d", hours, minutes, seconds);
-        oled_write_ln(buf, false);
+    char buf[6];
+    snprintf(buf, sizeof(buf), "%02d:%02d", hours, minutes);
+    oled_write_ln(buf, false);
 
 
 
@@ -243,8 +242,8 @@ void render_status_modern(void) {
 
     oled_write_P(
         caps
-            ? PSTR("c\x90\x91\x92\x93")
-            : PSTR("c\x94\x95\x96\x97"), false);
+            ? PSTR("\0x9c\x90\x91\x92\x93")
+            : PSTR("\0x9c\x94\x95\x96\x97"), false);
 
     render_space();
     oled_write_ln(layer_upper_name(get_current_layer()), false);
