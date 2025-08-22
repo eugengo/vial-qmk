@@ -242,8 +242,8 @@ void render_status_modern(void) {
 
     oled_write_P(
         caps
-            ? PSTR("\0x9c\x90\x91\x92\x93")
-            : PSTR("\0x9c\x94\x95\x96\x97"), false);
+            ? PSTR("\x9c\x90\x91\x92\x93")
+            : PSTR("\x9c\x94\x95\x96\x97"), false);
 
     render_space();
     oled_write_ln(layer_upper_name(get_current_layer()), false);
