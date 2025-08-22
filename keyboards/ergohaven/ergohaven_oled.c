@@ -224,7 +224,7 @@ void render_status_darkside(bool is_master) {
         uint8_t seconds = elapsed % 60;
 
         char buf[16];
-        snprintf(buf, sizeof(buf), "%02d:%02d", hours, minutes, seconds);
+        snprintf(buf, sizeof(buf), "%02d:%02d:%02d", hours, minutes, seconds);
         oled_write_ln(buf, false);
 
 
