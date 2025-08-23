@@ -197,26 +197,7 @@ void render_mod_status(uint8_t modifiers, bool gui_alt) {
 }
 
 // Icon and filler tablesi
-static const char PROGMEM icons[][2][3] = {
-    // [0] = off, [1] = on
-    // GUI/CTRL
-    {{0x80, 0x81, 0}, {0x88, 0x89, 0}}, // GUI
-    {{0x82, 0x83, 0}, {0x8a, 0x8b, 0}}, // ALT
-    {{0x84, 0x85, 0}, {0x8c, 0x8d, 0}}, // CTRL
-    {{0x86, 0x87, 0}, {0x8e, 0x8f, 0}}, // SHIFT
-    // Second row
-    {{0xa0, 0xa1, 0}, {0xa8, 0xa9, 0}}, // GUI
-    {{0xa2, 0xa3, 0}, {0xaa, 0xab, 0}}, // ALT
-    {{0xa4, 0xa5, 0}, {0xac, 0xad, 0}}, // CTRL
-    {{0xa6, 0xa7, 0}, {0xae, 0xaf, 0}}, // SHIFT
-};
-// Fillers between icons
-static const char PROGMEM fillers[4][2][2] = {
-    {{0xc0, 0}, {0xc6, 0}}, // off_off, on_on
-    {{0xc2, 0}, {0xc4, 0}}, // on_off, off_on
-    {{0xc1, 0}, {0xc7, 0}}, // off_off_2, on_on_2
-    {{0xc3, 0}, {0xc5, 0}}, // on_off_2, off_on_2
-};
+
 
 static const char PROGMEM icons[][2][3] = {
     {{0x80,0x81,0},{0x88,0x99,0}}, {{0x82,0x83,0},{0x8a,0x8b,0}},
