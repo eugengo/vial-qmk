@@ -214,7 +214,7 @@ void render_status_darkside(bool is_master) {
     render_mod_status(mods, true);  // GUI/ALT
     render_mod_status(mods, false); // CTRL/SHIFT
 
-    oled_set_cursor(0, 16);
+    oled_set_cursor(0, 15);
     static uint32_t start_time = 0;
     if (start_time == 0) start_time = timer_read32();
 
