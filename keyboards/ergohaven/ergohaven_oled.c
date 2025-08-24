@@ -193,8 +193,8 @@ void render_status_modern(void) {
     render_diamond_logo();
 
     oled_set_cursor(0, 5);
-    led_t led_usb_state = host_keyboard_led_state();
-    bool  caps          = led_usb_state.caps_lock || split_get_caps_word();
+    //led_t led_usb_state = host_keyboard_led_state();
+    //bool  caps          = led_usb_state.caps_lock || split_get_caps_word();
 
     // oled_write_P(
     //     caps
