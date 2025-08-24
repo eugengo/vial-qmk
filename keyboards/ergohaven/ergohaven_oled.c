@@ -209,38 +209,58 @@ void render_status_modern(void) {
         else if (layer == 2) active = 2; // CTRL
         else if (layer == 4) active = 3; // SHIFT
 
-        // Первая строка: GUI и ALT
-        for (uint8_t i = 0; i < 2; ++i) {
-            bool is_on = (active == i);
-            oled_write_P(icons[i][is_on], false);
-            if (i == 0) {
-                // Филлер между GUI и ALT
-                uint8_t filler_idx = 0 + ((active == 0) ? ((active == 1) ? 3 : 1) : ((active == 1) ? 2 : 0));
-                oled_write_P(&fillers[filler_idx][0], false);
+        // First row: GUI and ALT (icons 0,1; fillers 0–3)
+            for (uint8_t i = 0; i < 2; ++i) {
+                bool is_on = (active == i);
+                oled_write_P(icons[i][is_on], false);
+                if (i == 0) {
+                    uint8_t filler_idx = 0 + ((active == 0) ? ((active == 1) ? 3 : 1) : ((active == 1) ? 2 : 0));
+                    oled_write_P(&fillers[filler_idx][0], false);
+                }
             }
-        }
-        oled_write_P(PSTR("\n"), false);
+            oled_write_P(PSTR("\n"), false);
 
-        // Вторая строка: CTRL и SHIFT
-        for (uint8_t i = 2; i < 4; ++i) {
-            bool is_on = (active == i);
-            oled_write_P(icons[i][is_on], false);
-            if (i == 2) {
-                // Филлер между CTRL и SHIFT
-                uint8_t filler_idx = 0 + ((active == 2) ? ((active == 3) ? 3 : 1) : ((active == 3) ? 2 : 0));
-                oled_write_P(&fillers[filler_idx][0], false);
+            // Second row: GUI and ALT (icons 4,5; fillers 4–7)
+            for (uint8_t i = 4; i < 6; ++i) {
+                bool is_on = (active == (i - 4));
+                oled_write_P(icons[i][is_on], false);
+                if (i == 4) {
+                    uint8_t filler_idx = 4 + ((active == 0) ? ((active == 1) ? 3 : 1) : ((active == 1) ? 2 : 0));
+                    oled_write_P(&fillers[filler_idx][0], false);
+                }
             }
-        }
-        oled_write_P(PSTR("\n"), false);
+            oled_write_P(PSTR("\n"), false);
 
-        // Третья строка: nan или номер слоя
-        char buf[8];
-        if (layer > 4) {
-            snprintf(buf, sizeof(buf), "%d", layer);
-            oled_write_ln(buf, false);
-        } else {
-            oled_write_ln("nan", false);
-        }
+            // First row: CTRL and SHIFT (icons 2,3; fillers 0–3)
+            for (uint8_t i = 2; i < 4; ++i) {
+                bool is_on = (active == i);
+                oled_write_P(icons[i][is_on], false);
+                if (i == 2) {
+                    uint8_t filler_idx = 0 + ((active == 2) ? ((active == 3) ? 3 : 1) : ((active == 3) ? 2 : 0));
+                    oled_write_P(&fillers[filler_idx][0], false);
+                }
+            }
+            oled_write_P(PSTR("\n"), false);
+
+            // Second row: CTRL and SHIFT (icons 6,7; fillers 4–7)
+            for (uint8_t i = 6; i < 8; ++i) {
+                bool is_on = (active == (i - 4));
+                oled_write_P(icons[i][is_on], false);
+                if (i == 6) {
+                    uint8_t filler_idx = 4 + ((active == 2) ? ((active == 3) ? 3 : 1) : ((active == 3) ? 2 : 0));
+                    oled_write_P(&fillers[filler_idx][0], false);
+                }
+            }
+            oled_write_P(PSTR("\n"), false);
+
+            // Third line: nan or layer number
+            char buf[8];
+            if (layer > 4) {
+                snprintf(buf, sizeof(buf), "%d", layer);
+                oled_write_ln(buf, false);
+            } else {
+                oled_write_ln("nan", false);
+            }
 
 
     render_space();
