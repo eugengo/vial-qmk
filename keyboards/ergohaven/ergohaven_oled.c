@@ -102,7 +102,7 @@ void render_version(void) {
 }
 
 // Renders the logo and optionally WPM
-void render_apple_logo(void) {
+void render_diamond_logo(void) {
     static const uint8_t apple_logo[] = {0x20, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05};
     oled_set_cursor(0, 2);
     oled_write_char(apple_logo[0], false);
@@ -120,9 +120,8 @@ void render_apple_logo(void) {
 }
 
 // ergohaven_oled.c
-
-#include "quantum.h"
-#include <stdio.h>
+//#include "quantum.h"
+//#include <stdio.h>
 
 // --- Bitmaps ---
 static const char PROGMEM icons[][2][3] = {
@@ -164,7 +163,7 @@ static void render_mod_pair(uint8_t mods, uint8_t left_mask, uint8_t right_mask,
 void render_status_darkside(bool is_master) {
     render_name();
     render_space();
-    render_apple_logo();
+    render_diamond_logo();
     render_space();
 
     uint8_t mods = get_mods() | get_oneshot_mods();
@@ -191,16 +190,58 @@ void render_status_modern(void) {
     oled_clear();
     render_version();
     render_space();
-    render_apple_logo();
+    render_diamond_logo();
 
     oled_set_cursor(0, 5);
     led_t led_usb_state = host_keyboard_led_state();
     bool  caps          = led_usb_state.caps_lock || split_get_caps_word();
 
-    oled_write_P(
-        caps
-            ? PSTR("\x9c\x90\x91\x92\x93")
-            : PSTR("\x9c\x94\x95\x96\x97"), false);
+    // oled_write_P(
+    //     caps
+    //         ? PSTR("\x9c\x90\x91\x92\x93")
+    //         : PSTR("\x9c\x94\x95\x96\x97"), false);
+
+        int layer = get_current_layer();
+        // Определяем, какая пиктограмма активна
+        uint8_t active = 0xFF;
+        if (layer == 0)      active = 0; // GUI
+        else if (layer == 1) active = 1; // ALT
+        else if (layer == 2) active = 2; // CTRL
+        else if (layer == 4) active = 3; // SHIFT
+
+        // Первая строка: GUI и ALT
+        for (uint8_t i = 0; i < 2; ++i) {
+            bool is_on = (active == i);
+            oled_write_P(icons[i][is_on], false);
+            if (i == 0) {
+                // Филлер между GUI и ALT
+                uint8_t filler_idx = 0 + ((active == 0) ? ((active == 1) ? 3 : 1) : ((active == 1) ? 2 : 0));
+                oled_write_P(&fillers[filler_idx][0], false);
+            }
+        }
+        oled_write_P(PSTR("\n"), false);
+
+        // Вторая строка: CTRL и SHIFT
+        for (uint8_t i = 2; i < 4; ++i) {
+            bool is_on = (active == i);
+            oled_write_P(icons[i][is_on], false);
+            if (i == 2) {
+                // Филлер между CTRL и SHIFT
+                uint8_t filler_idx = 0 + ((active == 2) ? ((active == 3) ? 3 : 1) : ((active == 3) ? 2 : 0));
+                oled_write_P(&fillers[filler_idx][0], false);
+            }
+        }
+        oled_write_P(PSTR("\n"), false);
+
+        // Третья строка: nan или номер слоя
+        char buf[8];
+        if (layer > 4) {
+            snprintf(buf, sizeof(buf), "%d", layer);
+            oled_write_ln(buf, false);
+        } else {
+            oled_write_ln("nan", false);
+        }
+
 
     render_space();
     oled_write_ln(layer_upper_name(get_current_layer()), false);
