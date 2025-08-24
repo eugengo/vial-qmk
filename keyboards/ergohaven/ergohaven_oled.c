@@ -230,8 +230,8 @@ void render_status_modern(void) {
                 bool is_on = (active == i);
                 oled_write_P(icons_layer[i][is_on], false);
                 if (i == 0) {
-                    uint8_t filler_idx = 0 + ((active == 0) ? ((active == 1) ? 3 : 1) : ((active == 1) ? 2 : 0));
-                    oled_write_P(&fillers[filler_idx][0], false);
+                    static const char PROGMEM filler_top[] = {0xc0, 0};
+                    oled_write_P(filler_top, false);
                 }
             }
 
@@ -240,8 +240,8 @@ void render_status_modern(void) {
                 bool is_on = (active == (i - 4));
                 oled_write_P(icons_layer[i][is_on], false);
                 if (i == 4) {
-                    uint8_t filler_idx = 4 + ((active == 0) ? ((active == 1) ? 3 : 1) : ((active == 1) ? 2 : 0));
-                    oled_write_P(&fillers[filler_idx][0], false);
+                    static const char PROGMEM filler_top[] = {0xc1, 0};
+                    oled_write_P(filler_top, false);
                 }
             }
 
@@ -250,8 +250,8 @@ void render_status_modern(void) {
                 bool is_on = (active == i);
                 oled_write_P(icons_layer[i][is_on], false);
                 if (i == 2) {
-                    uint8_t filler_idx = 0 + ((active == 2) ? ((active == 3) ? 3 : 1) : ((active == 3) ? 2 : 0));
-                    oled_write_P(&fillers[filler_idx][0], false);
+                    static const char PROGMEM filler_top[] = {0xc0, 0};
+                    oled_write_P(filler_top, false);
                 }
             }
 
@@ -260,8 +260,8 @@ void render_status_modern(void) {
                 bool is_on = (active == (i - 4));
                 oled_write_P(icons_layer[i][is_on], false);
                 if (i == 6) {
-                    uint8_t filler_idx = 4 + ((active == 2) ? ((active == 3) ? 3 : 1) : ((active == 3) ? 2 : 0));
-                    oled_write_P(&fillers[filler_idx][0], false);
+                    static const char PROGMEM filler_top[] = {0xc1, 0};
+                    oled_write_P(filler_top, false);
                 }
             }
 
