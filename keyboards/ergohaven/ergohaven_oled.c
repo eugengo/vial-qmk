@@ -210,6 +210,8 @@ void render_status_modern(void) {
         else if (layer == 4) active = 3; // SHIFT
 
         // First row: GUI and ALT (icons 0,1; fillers 0–3)
+        // Set cursor to start (0,0) for first row
+        oled_set_cursor(0, 5);
             for (uint8_t i = 0; i < 2; ++i) {
                 bool is_on = (active == i);
                 oled_write_P(icons[i][is_on], false);
@@ -218,7 +220,6 @@ void render_status_modern(void) {
                     oled_write_P(&fillers[filler_idx][0], false);
                 }
             }
-            oled_write_P(PSTR("\n"), false);
 
             // Second row: GUI and ALT (icons 4,5; fillers 4–7)
             for (uint8_t i = 4; i < 6; ++i) {
@@ -229,7 +230,6 @@ void render_status_modern(void) {
                     oled_write_P(&fillers[filler_idx][0], false);
                 }
             }
-            oled_write_P(PSTR("\n"), false);
 
             // First row: CTRL and SHIFT (icons 2,3; fillers 0–3)
             for (uint8_t i = 2; i < 4; ++i) {
@@ -240,7 +240,6 @@ void render_status_modern(void) {
                     oled_write_P(&fillers[filler_idx][0], false);
                 }
             }
-            oled_write_P(PSTR("\n"), false);
 
             // Second row: CTRL and SHIFT (icons 6,7; fillers 4–7)
             for (uint8_t i = 6; i < 8; ++i) {
@@ -251,7 +250,6 @@ void render_status_modern(void) {
                     oled_write_P(&fillers[filler_idx][0], false);
                 }
             }
-            oled_write_P(PSTR("\n"), false);
 
             // Third line: nan or layer number
             char buf[8];
