@@ -119,115 +119,72 @@ void render_apple_logo(void) {
 
 }
 
-// Renders modifier status (GUI/ALT or CTRL/SHIFT)
-void render_mod_status(uint8_t modifiers, bool gui_alt) {
-    //oled_set_cursor(0, 6);
-    // Icon sets for GUI/ALT and CTRL/SHIFT
-    static const char PROGMEM icons[][2][3] = {
-        // [0] = off, [1] = on
-        // GUI/CTRL
-        {{0x80, 0x81, 0}, {0x88, 0x89, 0}}, // GUI
-        {{0x82, 0x83, 0}, {0x8a, 0x8b, 0}}, // ALT
-        {{0x84, 0x85, 0}, {0x8c, 0x8d, 0}}, // CTRL
-        {{0x86, 0x87, 0}, {0x8e, 0x8f, 0}}, // SHIFT
-        // Second row
-        {{0xa0, 0xa1, 0}, {0xa8, 0xa9, 0}}, // GUI
-        {{0xa2, 0xa3, 0}, {0xaa, 0xab, 0}}, // ALT
-        {{0xa4, 0xa5, 0}, {0xac, 0xad, 0}}, // CTRL
-        {{0xa6, 0xa7, 0}, {0xae, 0xaf, 0}}, // SHIFT
-    };
-    // Fillers between icons
-    static const char PROGMEM fillers[4][2][2] = {
-        {{0xc0, 0}, {0xc6, 0}}, // off_off, on_on
-        {{0xc2, 0}, {0xc4, 0}}, // on_off, off_on
-        {{0xc1, 0}, {0xc7, 0}}, // off_off_2, on_on_2
-        {{0xc3, 0}, {0xc5, 0}}, // on_off_2, off_on_2
-    };
+// ergohaven_oled.c
 
-    if (gui_alt) {
-        // GUI/ALT row 1
-        oled_write_P(icons[0][(modifiers & MOD_MASK_GUI) ? 1 : 0], false);
-        if ((modifiers & MOD_MASK_GUI) && (modifiers & MOD_MASK_ALT)) {
-            oled_write_P(fillers[0][1], false);
-        } else if (modifiers & MOD_MASK_GUI) {
-            oled_write_P(fillers[1][0], false);
-        } else if (modifiers & MOD_MASK_ALT) {
-            oled_write_P(fillers[1][1], false);
-        } else {
-            oled_write_P(fillers[0][0], false);
-        }
-        oled_write_P(icons[1][(modifiers & MOD_MASK_ALT) ? 1 : 0], false);
-        // GUI/ALT row 2
-        oled_write_P(icons[4][(modifiers & MOD_MASK_GUI) ? 1 : 0], false);
-        if ((modifiers & MOD_MASK_GUI) && (modifiers & MOD_MASK_ALT)) {
-            oled_write_P(fillers[2][1], false);
-        } else if (modifiers & MOD_MASK_GUI) {
-            oled_write_P(fillers[3][0], false);
-        } else if (modifiers & MOD_MASK_ALT) {
-            oled_write_P(fillers[3][1], false);
-        } else {
-            oled_write_P(fillers[2][0], false);
-        }
-        oled_write_P(icons[5][(modifiers & MOD_MASK_ALT) ? 1 : 0], false);
-    } else {
-        // CTRL/SHIFT row 1
-        oled_write_P(icons[2][(modifiers & MOD_MASK_CTRL) ? 1 : 0], false);
-        if ((modifiers & MOD_MASK_CTRL) && (modifiers & MOD_MASK_SHIFT)) {
-            oled_write_P(fillers[0][1], false);
-        } else if (modifiers & MOD_MASK_CTRL) {
-            oled_write_P(fillers[1][0], false);
-        } else if (modifiers & MOD_MASK_SHIFT) {
-            oled_write_P(fillers[1][1], false);
-        } else {
-            oled_write_P(fillers[0][0], false);
-        }
-        oled_write_P(icons[3][(modifiers & MOD_MASK_SHIFT) ? 1 : 0], false);
-        // CTRL/SHIFT row 2
-        oled_write_P(icons[6][(modifiers & MOD_MASK_CTRL) ? 1 : 0], false);
-        if ((modifiers & MOD_MASK_CTRL) && (modifiers & MOD_MASK_SHIFT)) {
-            oled_write_P(fillers[2][1], false);
-        } else if (modifiers & MOD_MASK_CTRL) {
-            oled_write_P(fillers[3][0], false);
-        } else if (modifiers & MOD_MASK_SHIFT) {
-            oled_write_P(fillers[3][1], false);
-        } else {
-            oled_write_P(fillers[2][0], false);
-        }
-        oled_write_P(icons[7][(modifiers & MOD_MASK_SHIFT) ? 1 : 0], false);
-    }
+#include "quantum.h"
+#include <stdio.h>
+
+// --- Bitmaps ---
+static const char PROGMEM icons[][2][3] = {
+    // [0] = off, [1] = on
+    // GUI/ALT/CTRL/SHIFT first row
+    {{0x80, 0x81, 0}, {0x88, 0x89, 0}}, // GUI
+    {{0x82, 0x83, 0}, {0x8a, 0x8b, 0}}, // ALT
+    {{0x84, 0x85, 0}, {0x8c, 0x8d, 0}}, // CTRL
+    {{0x86, 0x87, 0}, {0x8e, 0x8f, 0}}, // SHIFT
+    // GUI/ALT/CTRL/SHIFT second row
+    {{0xa0, 0xa1, 0}, {0xa8, 0xa9, 0}}, // GUI
+    {{0xa2, 0xa3, 0}, {0xaa, 0xab, 0}}, // ALT
+    {{0xa4, 0xa5, 0}, {0xac, 0xad, 0}}, // CTRL
+    {{0xa6, 0xa7, 0}, {0xae, 0xaf, 0}}, // SHIFT
+};
+
+static const char PROGMEM fillers[][2] = {
+    {0xc0, 0}, {0xc2, 0}, {0xc4, 0}, {0xc6, 0}, // first row: off_off, on_off, off_on, on_on
+    {0xc1, 0}, {0xc3, 0}, {0xc5, 0}, {0xc7, 0}, // second row: off_off_2, on_off_2, off_on_2, on_on_2
+};
+
+// --- Helpers ---
+static inline void render_space(void) {
+    oled_write_P(PSTR("     "), false);
 }
 
-// Main unified status render function
+// Renders a pair of modifier icons with a filler between them
+static void render_mod_pair(uint8_t mods, uint8_t left_mask, uint8_t right_mask, uint8_t icon_idx, uint8_t filler_base) {
+    bool left = mods & left_mask;
+    bool right = mods & right_mask;
+    oled_write_P(icons[icon_idx][left], false);
+    // Filler index: 0=off_off, 1=on_off, 2=off_on, 3=on_on
+    uint8_t filler_idx = filler_base + (left ? (right ? 3 : 1) : (right ? 2 : 0));
+    oled_write_P(&fillers[filler_idx][0], false);
+    oled_write_P(icons[icon_idx + 1][right], false);
+}
+
+// --- Main status render ---
 void render_status_darkside(bool is_master) {
-    // Render logo (with or without WPM)
     render_name();
     render_space();
-    //oled_clear();
     render_apple_logo();
-
-    // Render current layer
-    //render_layer_state();
     render_space();
 
-    // Render modifier status
     uint8_t mods = get_mods() | get_oneshot_mods();
-    render_mod_status(mods, true);  // GUI/ALT
-    render_mod_status(mods, false); // CTRL/SHIFT
+
+    // GUI/ALT first row
+    render_mod_pair(mods, MOD_MASK_GUI, MOD_MASK_ALT, 0, 0);
+    // GUI/ALT second row
+    render_mod_pair(mods, MOD_MASK_GUI, MOD_MASK_ALT, 4, 4);
+    // CTRL/SHIFT first row
+    render_mod_pair(mods, MOD_MASK_CTRL, MOD_MASK_SHIFT, 2, 0);
+    // CTRL/SHIFT second row
+    render_mod_pair(mods, MOD_MASK_CTRL, MOD_MASK_SHIFT, 6, 4);
 
     oled_set_cursor(0, 14);
     static uint32_t start_time = 0;
     if (start_time == 0) start_time = timer_read32();
-
     uint32_t elapsed = (timer_read32() - start_time) / 1000;
-    uint8_t hours = elapsed / 3600;
-    uint8_t minutes = (elapsed % 3600) / 60;
-
     char buf[6];
-    snprintf(buf, sizeof(buf), "%02d:%02d", hours, minutes);
+    snprintf(buf, sizeof(buf), "%02lu:%02lu", elapsed / 3600, (elapsed / 60) % 60);
     oled_write_ln(buf, false);
-
-
-
 }
 
 void render_status_modern(void) {
