@@ -138,6 +138,20 @@ static const char PROGMEM icons[][2][3] = {
     {{0xa6, 0xa7, 0}, {0xae, 0xaf, 0}}, // SHIFT
 };
 
+static const char PROGMEM icons_layer[][2][3] = {
+    // [0] = off, [1] = on
+    // GUI/ALT/CTRL/SHIFT first row
+    {{0x90, 0x91, 0}, {0x98, 0x99, 0}}, // GUI
+    {{0x92, 0x93, 0}, {0x9a, 0x9b, 0}}, // ALT
+    {{0x94, 0x95, 0}, {0x9c, 0x9d, 0}}, // CTRL
+    {{0x96, 0x97, 0}, {0x9e, 0x9f, 0}}, // SHIFT
+    // GUI/ALT/CTRL/SHIFT second row
+    {{0xb0, 0xb1, 0}, {0xb8, 0xb9, 0}}, // GUI
+    {{0xb2, 0xb3, 0}, {0xba, 0xbb, 0}}, // ALT
+    {{0xb4, 0xb5, 0}, {0xbc, 0xbd, 0}}, // CTRL
+    {{0xb6, 0xb7, 0}, {0xbe, 0xbf, 0}}, // SHIFT
+};
+
 static const char PROGMEM fillers[][2] = {
     {0xc0, 0}, {0xc2, 0}, {0xc4, 0}, {0xc6, 0}, // first row: off_off, on_off, off_on, on_on
     {0xc1, 0}, {0xc3, 0}, {0xc5, 0}, {0xc7, 0}, // second row: off_off_2, on_off_2, off_on_2, on_on_2
@@ -214,7 +228,7 @@ void render_status_modern(void) {
         oled_set_cursor(0, 5);
             for (uint8_t i = 0; i < 2; ++i) {
                 bool is_on = (active == i);
-                oled_write_P(icons[i][is_on], false);
+                oled_write_P(icons_layer[i][is_on], false);
                 if (i == 0) {
                     uint8_t filler_idx = 0 + ((active == 0) ? ((active == 1) ? 3 : 1) : ((active == 1) ? 2 : 0));
                     oled_write_P(&fillers[filler_idx][0], false);
@@ -224,7 +238,7 @@ void render_status_modern(void) {
             // Second row: GUI and ALT (icons 4,5; fillers 4–7)
             for (uint8_t i = 4; i < 6; ++i) {
                 bool is_on = (active == (i - 4));
-                oled_write_P(icons[i][is_on], false);
+                oled_write_P(icons_layer[i][is_on], false);
                 if (i == 4) {
                     uint8_t filler_idx = 4 + ((active == 0) ? ((active == 1) ? 3 : 1) : ((active == 1) ? 2 : 0));
                     oled_write_P(&fillers[filler_idx][0], false);
@@ -234,7 +248,7 @@ void render_status_modern(void) {
             // First row: CTRL and SHIFT (icons 2,3; fillers 0–3)
             for (uint8_t i = 2; i < 4; ++i) {
                 bool is_on = (active == i);
-                oled_write_P(icons[i][is_on], false);
+                oled_write_P(icons_layer[i][is_on], false);
                 if (i == 2) {
                     uint8_t filler_idx = 0 + ((active == 2) ? ((active == 3) ? 3 : 1) : ((active == 3) ? 2 : 0));
                     oled_write_P(&fillers[filler_idx][0], false);
@@ -244,7 +258,7 @@ void render_status_modern(void) {
             // Second row: CTRL and SHIFT (icons 6,7; fillers 4–7)
             for (uint8_t i = 6; i < 8; ++i) {
                 bool is_on = (active == (i - 4));
-                oled_write_P(icons[i][is_on], false);
+                oled_write_P(icons_layer[i][is_on], false);
                 if (i == 6) {
                     uint8_t filler_idx = 4 + ((active == 2) ? ((active == 3) ? 3 : 1) : ((active == 3) ? 2 : 0));
                     oled_write_P(&fillers[filler_idx][0], false);
