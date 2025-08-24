@@ -88,9 +88,9 @@ void render_status_classic(void) {
     oled_write_P(PSTR("CPSLK"), caps);
 }
 
-void render_space(void) {
-    oled_write_P(PSTR("     "), false);
-}
+//void render_space(void) {
+    //oled_write_P(PSTR("     "), false);
+//}
 
 //
 void render_name(void) {
