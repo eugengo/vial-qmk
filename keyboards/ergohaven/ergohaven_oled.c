@@ -191,6 +191,11 @@ void render_status_darkside(bool is_master) {
     // CTRL/SHIFT second row
     render_mod_pair(mods, MOD_MASK_CTRL, MOD_MASK_SHIFT, 6, 4);
 
+
+    oled_write_P(PSTR("\x06\x07\x08\x09\x0a"), false);
+    oled_write_P(PSTR("\x0b\x0c\x0d\x0e\x0f"), false);
+    oled_write_P(PSTR("\x20\x20\x20\x20\x10"), false);
+
     oled_set_cursor(0, 14);
     static uint32_t start_time = 0;
     if (start_time == 0) start_time = timer_read32();
@@ -271,12 +276,11 @@ void render_status_modern(void) {
                 snprintf(buf, sizeof(buf), "%d", layer);
                 oled_write_ln(buf, false);
             } else {
-                oled_write_ln("nan", false);
+                oled_write_ln(" ", false);
             }
-
-
-    render_space();
-    oled_write_ln(layer_upper_name(get_current_layer()), false);
+            oled_write_P(PSTR("\xc8\xc9\xca\xcb\xcc"), false);
+            oled_write_P(PSTR("     "), false);
+            oled_write_P(PSTR("\xd2\xd3\xd4\xd5\xd6"), false);
 }
 
 void render_big_num(int num, char* c0, char* c1, char* c2, char* c3) {
