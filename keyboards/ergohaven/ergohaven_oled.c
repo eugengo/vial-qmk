@@ -193,13 +193,10 @@ void render_status_darkside(bool is_master) {
     render_mod_pair(mods, MOD_MASK_CTRL, MOD_MASK_SHIFT, 6, 4);
 
     oled_set_cursor(0, 10);
-    //oled_write_P(PSTR("\x06\x07\x07\x07\x08"), false);
-    oled_write_P(PSTR("\x0d\x0e"), false);
-    oled_write_P(PSTR("\x0d   \x0e"), false);
-    oled_set_cursor(0, 12);
-    oled_write_P(PSTR("\x09\x0a\x0a\x0a\x0b"), false);
-    oled_set_cursor(0, 13);
-    oled_write_P(PSTR("\x20\x20\x20\x20\x0c"), false);
+    oled_write_P(PSTR("\xd7\xd8\xd8\xd8\xd9"), false);
+    oled_write_P(PSTR("\xdd\x20\x20\x20\xde"), false);
+    oled_write_P(PSTR("\xda\xdb\xbd\xbd\xdc"), false);
+    oled_write_P(PSTR("\x20\x20\x20\x20\xdf"), false);
 
     oled_set_cursor(0, 14);
     static uint32_t start_time = 0;
