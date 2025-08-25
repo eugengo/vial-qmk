@@ -195,7 +195,7 @@ void render_status_darkside(bool is_master) {
     oled_set_cursor(0, 10);
     oled_write_P(PSTR("\xd7\xd8\xd8\xd8\xd9"), false);
     oled_write_P(PSTR("\xdd\x20\x20\x20\xde"), false);
-    oled_write_P(PSTR("\xda\xdb\xbd\xbd\xdc"), false);
+    oled_write_P(PSTR("\xda\xdb\xdb\xdb\xdc"), false);
     oled_write_P(PSTR("\x20\x20\x20\x20\xdf"), false);
 
     oled_set_cursor(0, 14);
