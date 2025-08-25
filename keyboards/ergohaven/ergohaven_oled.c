@@ -175,6 +175,7 @@ static void render_mod_pair(uint8_t mods, uint8_t left_mask, uint8_t right_mask,
 
 // --- Main status render ---
 void render_status_darkside(bool is_master) {
+    oled_clear();
     render_name();
     render_space();
     render_diamond_logo();
@@ -192,7 +193,7 @@ void render_status_darkside(bool is_master) {
     render_mod_pair(mods, MOD_MASK_CTRL, MOD_MASK_SHIFT, 6, 4);
 
     oled_set_cursor(0, 11);
-    oled_write_P(PSTR("\x06\x07\x08\x09\x0f"), false);
+    oled_write_P(PSTR("\x06\x07\x08\x09\x0a"), false);
     oled_write_P(PSTR("\x0b\x0c\x0d\x0e\x0f"), false);
     oled_write_P(PSTR("\x20\x20\x20\x20\x10"), false);
 
