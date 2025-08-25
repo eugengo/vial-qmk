@@ -192,7 +192,7 @@ void render_status_darkside(bool is_master) {
     // CTRL/SHIFT second row
     render_mod_pair(mods, MOD_MASK_CTRL, MOD_MASK_SHIFT, 6, 4);
 
-    oled_set_cursor(0, 11);
+    oled_set_cursor(0, 10);
     oled_write_P(PSTR("\x06\x07\x07\x07\x08"), false);
     oled_write_P(PSTR("\x0d\x20\x20\x20\x0e"), false);
     oled_write_P(PSTR("\x09\x0a\x0a\x0a\x0b"), false);
