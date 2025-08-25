@@ -193,7 +193,7 @@ void render_status_darkside(bool is_master) {
     render_mod_pair(mods, MOD_MASK_CTRL, MOD_MASK_SHIFT, 6, 4);
 
     oled_set_cursor(0, 10);
-    oled_write_P(PSTR("\x06\x07\x07\x07\x08"), false);
+    //oled_write_P(PSTR("\x06\x07\x07\x07\x08"), false);
     oled_write_P(PSTR("\x0d\x0e"), false);
     oled_write_P(PSTR("\x0d   \x0e"), false);
     oled_set_cursor(0, 12);
