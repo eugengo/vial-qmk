@@ -8,8 +8,6 @@
 #include <stdbool.h>
 #include <timer.h>
 
-#include "spaceship.c"
-
 typedef union {
     uint32_t raw;
     struct {
@@ -29,7 +27,6 @@ typedef enum {
     OLED_STATUS_CLASSIC = 0,
     OLED_STATUS_MODERN,
     OLED_STATUS_DARKSIDE,
-    OLED_SPACESHIP,
     OLED_DISABLED,
 } oled_mode_t;
 
@@ -37,8 +34,8 @@ oled_mode_t get_oled_mode_on_half(bool on_master) {
     if (on_master) return vial_config.oled_master;
 
     // first two modes swapped for slave
-    if (vial_config.oled_slave == OLED_STATUS_DARKSIDE) return OLED_SPACESHIP;
-    if (vial_config.oled_slave == OLED_SPACESHIP) return OLED_STATUS_DARKSIDE;
+    if (vial_config.oled_slave == OLED_STATUS_DARKSIDE) return OLED_STATUS_MODERN;
+    if (vial_config.oled_slave == OLED_STATUS_MODERN) return OLED_STATUS_DARKSIDE;
 
     return vial_config.oled_slave;
 }
@@ -62,9 +59,9 @@ bool split_get_caps_word(void) {
 oled_rotation_t get_desired_oled_rotation(void) {
     int mode = get_oled_mode();
     switch (mode) {
-        case OLED_SPACESHIP:
-            return is_keyboard_left() ? OLED_ROTATION_0 : OLED_ROTATION_180;
-            break;
+        //case OLED_SPACESHIP:
+            //return is_keyboard_left() ? OLED_ROTATION_0 : OLED_ROTATION_180;
+            //break;
         default:
             return OLED_ROTATION_270;
     }
@@ -331,10 +328,6 @@ bool oled_task_kb(void) {
         case OLED_STATUS_DARKSIDE:
                   render_status_darkside(is_keyboard_master());
                   break;
-
-        case OLED_SPACESHIP:
-            render_spaceship();
-            break;
 
         case OLED_DISABLED:
         default:
