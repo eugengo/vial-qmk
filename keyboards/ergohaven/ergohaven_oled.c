@@ -305,10 +305,6 @@ bool oled_task_kb(void) {
 
     uint8_t mode = get_oled_mode();
     switch (mode) {
-        case OLED_STATUS_CLASSIC:
-            render_status_classic();
-            break;
-
         case OLED_STATUS_MODERN:
             render_status_modern();
             break;
