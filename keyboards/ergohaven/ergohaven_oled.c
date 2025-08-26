@@ -24,8 +24,7 @@ typedef union {
 vial_config_t vial_config;
 
 typedef enum {
-    OLED_STATUS_CLASSIC = 0,
-    OLED_STATUS_MODERN,
+    OLED_STATUS_MODERN = 0,
     OLED_STATUS_DARKSIDE,
     OLED_DISABLED,
 } oled_mode_t;
@@ -72,17 +71,6 @@ static oled_rotation_t current_oled_rotation;
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     current_oled_rotation = get_desired_oled_rotation();
     return current_oled_rotation;
-}
-
-void render_status_classic(void) {
-
-    // Print current layer
-    oled_set_cursor(0, 12);
-    oled_write_P(PSTR(layer_name(get_current_layer())), false);
-
-    oled_set_cursor(0, 15);
-    bool caps = host_keyboard_led_state().caps_lock || split_get_caps_word();
-    oled_write_P(PSTR("CPSLK"), caps);
 }
 
 //void render_space(void) {
